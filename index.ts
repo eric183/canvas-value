@@ -25,7 +25,7 @@ export default class Canvas {
     devicePixelRatio: number;
     startTime: number;
     redraw: any;
-
+    image?: string;
     constructor(dom: HTMLElement) {
         this.canvas = dom;
         let w = this.canvas.width;
