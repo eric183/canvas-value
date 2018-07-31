@@ -26,6 +26,7 @@ export default class Canvas {
     startTime: number;
     redraw: any;
     image?: string;
+    
     constructor(dom: HTMLElement) {
         this.canvas = dom;
         let w = this.canvas.width;
