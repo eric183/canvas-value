@@ -1,7 +1,7 @@
 {
   "name": "canvas-value",
   "version": "1.0.0",
-  "description": "A library to handle a value in the canvas\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[Da\u001b[C\u001b[\u001b[\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001bcanvas",
+  "description": "A library to handle a value in the canvas",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
