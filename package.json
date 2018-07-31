@@ -1,0 +1,24 @@
+{
+  "name": "canvas-value",
+  "version": "1.0.0",
+  "description": "A library to handle a value in the canvas\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[Da\u001b[C\u001b[\u001b[\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001bcanvas",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eric183/canvas-value.git"
+  },
+  "keywords": [
+    "canvas",
+    "html5",
+    "javascript"
+  ],
+  "author": "erickuang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/eric183/canvas-value/issues"
+  },
+  "homepage": "https://github.com/eric183/canvas-value#readme"
+}
