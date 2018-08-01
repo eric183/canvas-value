@@ -13,7 +13,8 @@ interface loopOption {
     width: number;
     height: number;
     posX: number; 
-    posY: number 
+    posY: number;
+    images?: any;
 }
 
 export default class Canvas {
@@ -26,6 +27,8 @@ export default class Canvas {
     startTime: number;
     redraw: any;
     image?: string;
+    isImageLoaded: boolean;
+
     constructor(dom: HTMLElement) {
         this.canvas = dom;
         let w = this.canvas.width;
@@ -38,25 +41,56 @@ export default class Canvas {
         this.canvas.height = this.devicePixelRatio * h;        
         this.context = this.canvas.getContext('2d');
         this.startTime = null;
+        this.isImageLoaded = false;
     }
 
     init(option: Option) {
         
         var objectLength = option.data.length;
         
-        this.collectionData = option.data.map((data, index)=> {
-            while(objectLength > 0) {
-                objectLength--;
-                return { ...data, ...option.positions[index]};
-            }  
+        this.imageLoader(option).then((data)=> {
+
+            console.log(this.isImageLoaded);
+            this.collectionData = option.data.map((data, index)=> {
+                while(objectLength > 0) {
+                    objectLength--;
+                    return { ...data, ...option.positions[index]};
+                }  
+            })
+            
+            this.draw();
+            this.clickListener();
+            TweenMax.ticker.addEventListener("tick", this.animateRedraw, this);
+
         })
-        
-        this.draw();
-        this.clickListener();
+       
         // TweenMax.ticker.fps(5);
 
-        TweenMax.ticker.addEventListener("tick", this.animateRedraw, this);
     }
+    imageLoader(option) {
+        /* 
+         * 检查图片加载情况  
+         */
+        let _this = this;
+        let arrayLength = JSON.stringify(option.data).match(/png/gmi).length;
+   
+        return new Promise((resolve)=> {
+            option.data.forEach((current: any)=> {
+                current.images.forEach((image)=> {
+                    var img = new Image();
+                    img.src = image;
+                    img.onload = function() {
+                        arrayLength -= 1;
+                        if(arrayLength <= 0) { 
+                            _this.isImageLoaded = true 
+                            resolve(_this.isImageLoaded);
+                        };   
+                    }  
+                })
+            });
+        })
+    }
+
     clickListener() {
         this.canvas.addEventListener("click", (e)=> {
             let BoundingClientRect = e.target.getBoundingClientRect();
@@ -75,9 +109,18 @@ export default class Canvas {
     draw() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.context.beginPath();
-        this.collectionData.forEach((obj: loopOption)=> {
-            this.context.rect(obj.posX, obj.posY, obj.width, obj.height);
-            this.context.stroke();
+
+        this.collectionData.forEach((data: loopOption)=> {
+
+            // console.log(data);
+            data.images.forEach(element => {
+                var image = new Image();
+                image.src = element;
+                this.context.drawImage(image, data.posX, data.posY, data.width, data.height);
+                // image.onload = ()=> {
+                // }
+            });
+            // this.context.stroke();
         })
     }
 
