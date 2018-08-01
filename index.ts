@@ -18,7 +18,7 @@ interface loopOption {
 }
 
 export default class Canvas {
-    canvas: any;
+    canvas: HTMLCanvasElement;
     context: any;
     postions: any;
     collectionData: object[];
@@ -29,7 +29,7 @@ export default class Canvas {
     image?: string;
     isImageLoaded: boolean;
 
-    constructor(dom: HTMLElement) {
+    constructor(dom: HTMLCanvasElement) {
         this.canvas = dom;
         let w = this.canvas.width;
         let h = this.canvas.height;
@@ -92,7 +92,7 @@ export default class Canvas {
     }
 
     clickListener() {
-        this.canvas.addEventListener("click", (e)=> {
+        this.canvas.addEventListener("click", (e: any)=> {
             let BoundingClientRect = e.target.getBoundingClientRect();
             let clickX = (e.clientX - BoundingClientRect.left) * this.devicePixelRatio; 
             let clickY = (e.clientY - BoundingClientRect.top) * this.devicePixelRatio;
