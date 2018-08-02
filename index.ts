@@ -5,6 +5,7 @@ interface Option {
     tooltip?: any;
     data: object[];
     positions: object[];
+    clickAfter(value: object); 
 }
 
 
@@ -59,7 +60,7 @@ export default class Canvas {
             })
             
             this.draw();
-            this.clickListener();
+            !!option.clickAfter && this.clickListener(option);
             TweenMax.ticker.addEventListener("tick", this.animateRedraw, this);
 
         })
@@ -67,6 +68,7 @@ export default class Canvas {
         // TweenMax.ticker.fps(5);
 
     }
+   
     imageLoader(option) {
         /* 
          * 检查图片加载情况  
@@ -91,7 +93,7 @@ export default class Canvas {
         })
     }
 
-    clickListener() {
+    clickListener(option) {
         this.canvas.addEventListener("click", (e: any)=> {
             let BoundingClientRect = e.target.getBoundingClientRect();
             let clickX = (e.clientX - BoundingClientRect.left) * this.devicePixelRatio; 
@@ -99,7 +101,9 @@ export default class Canvas {
             
             this.collectionData.forEach((data: loopOption)=> {
                 if(clickX >= data.posX && clickX < data.posX + data.width && clickY >= data.posY && clickY < data.height + data.posY) {
-                    alert(data.id);
+                    // alert(data.id);
+                    // debugger;
+                    option.clickAfter(data);   
                 }
             })
 
